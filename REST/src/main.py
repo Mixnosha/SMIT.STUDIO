@@ -5,7 +5,7 @@ from rate.router import router as post_router
 from tortoise.contrib.fastapi import register_tortoise
 from database import DATABASE_URL
 
-app = FastAPI()
+app = FastAPI(title="SMIT.STUDIO")
 
 register_tortoise(
     app,

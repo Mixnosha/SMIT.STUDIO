@@ -4,7 +4,7 @@ from rate.models import Rate
 from typing import List
 from rate.shemas import CalcRateScheme, InputRateScheme, RateScheme
 
-router = APIRouter(prefix="/post", tags=["Post"])
+router = APIRouter(prefix="/rate", tags=["Rate"])
 
 
 @router.get("/all_rate", response_model=List[RateScheme])
