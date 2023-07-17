@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15.2-alpine
+    hostname: postgres
+    restart: always
+    ports:
+      - "54321:5432"
+    environment:
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_USER: "user"
+      POSTGRES_DB: "postgres"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  rest:
+    build:
+      context: .
+      dockerfile: docker/REST/Dockerfile
+    hostname: social
+    restart: always
+    environment:
+      PYTHONPATH: /REST/src
+    env_file:
+      - REST/.env
+    volumes:
+      - ./REST:/REST
+    ports:
+      - "8000:8000"
+    command: >
+      /bin/sh -c "python src/createSchema.py && python src/main.py"
+    depends_on:
+      - postgres
